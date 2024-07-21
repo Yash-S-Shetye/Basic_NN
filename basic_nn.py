@@ -49,7 +49,7 @@ class BasicNN_train(nn.Module):
         self.b10 = nn.Parameter(torch.tensor(0.0), requires_grad=False)
         self.w11 = nn.Parameter(torch.tensor(2.7), requires_grad=False)
         
-        self.final_bias = nn.Parameter(torch.tensor(-16.0), requires_grad=True)
+        self.final_bias = nn.Parameter(torch.tensor(0.), requires_grad=True)
 
     def forward(self, input):
         input_to_top_relu = input * self.w00 + self.b00
@@ -67,8 +67,6 @@ class BasicNN_train(nn.Module):
         return output
 
 if __name__ == '__main__':
-
-    input_doses = torch.linspace(start=0, end=1, steps=11)
 
     model = BasicNN_train()
 
@@ -111,6 +109,10 @@ if __name__ == '__main__':
         optimizer.zero_grad()
 
         print("step: " + str(epochs) + " Final Bias: " + str(model.final_bias.data) + "\n")
+    
+    input_doses = torch.linspace(start=0, end=1, steps=11)
+
+    output_values = model(input_doses)
 
     sns.set(style="whitegrid")
 
